@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="6.0" client="site" method="upgrade">
+	<name>MOD_SITEREDIRECT</name>
+	<creationDate>23rd July, 2026</creationDate>
+	<author>Llewellyn</author>
+	<authorEmail>joomla@vdm.io</authorEmail>
+	<authorUrl>https://www.vdm.io</authorUrl>
+	<copyright>Copyright (C) 2015. All Rights Reserved</copyright>
+	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<version>5.0.0</version>
+	<namespace path="src">JCB\Module\SiteRedirect</namespace>
+	<description>MOD_SITEREDIRECT_XML_DESCRIPTION</description>
+
+	<!-- [VDM\Joomla\Componentbuilder\Compiler\Architecture\JoomlaSix\Module\MainXML 300] Scripts to run on installation -->
+	<scriptfile>script.php</scriptfile>
+
+	<!-- [VDM\Joomla\Componentbuilder\Compiler\Architecture\JoomlaSix\Module\MainXML 308] Runs on install -->
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/mysql/install.sql</file>
+		</sql>
+	</install>
+
+	<!-- [VDM\Joomla\Componentbuilder\Compiler\Architecture\JoomlaSix\Module\MainXML 320] Runs on uninstall -->
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/mysql/uninstall.sql</file>
+		</sql>
+	</uninstall>
+
+	<!-- [VDM\Joomla\Componentbuilder\Compiler\Architecture\JoomlaSix\Module\MainXML 348] Language files -->
+	<languages folder="language">
+		<language tag="en-GB">en-GB/mod_siteredirect.ini</language>
+		<language tag="en-GB">en-GB/mod_siteredirect.sys.ini</language>
+	</languages>
+
+	<!-- [VDM\Joomla\Componentbuilder\Compiler\Architecture\JoomlaSix\Module\MainXML 380] Module files -->
+	<files>
+		<folder module="mod_siteredirect">services</folder>
+		<filename>index.html</filename>
+		<folder>language</folder>
+		<folder>sql</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+	</files>
+
+	<!-- [VDM\Joomla\Componentbuilder\Compiler\Architecture\JoomlaSix\Module\MainXML 430] Config parameters -->
+	<config>
+	<fields name="params">
+	<fieldset name="basic" label="MOD_SITEREDIRECT_DETAILS">
+		<!-- [VDM\Joomla\Componentbuilder\Compiler\Creator\FieldString 484] Redirect Field. Type: Subform. (joomla) -->
+		<field
+			type="subform"
+			name="redirect"
+			label="MOD_SITEREDIRECT_REDIRECT_LABEL"
+			layout="joomla.form.field.subform.repeatable"
+			multiple="true"
+			buttons="add,remove,move"
+			description="MOD_SITEREDIRECT_REDIRECT_DESCRIPTION"
+			icon="list"
+			max="10"
+			min="1">
+			<form hidden="true" name="list_redirect_modal" repeat="true">
+				<!-- [VDM\Joomla\Componentbuilder\Compiler\Creator\FieldString 289] Groups Field. Type: Usergrouplist. (joomla) -->
+				<field
+					type="usergrouplist"
+					name="groups"
+					label="MOD_SITEREDIRECT_GROUPS_LABEL"
+					description="MOD_SITEREDIRECT_GROUPS_DESCRIPTION"
+					layout="joomla.form.field.list-fancy-select"
+					required="true"
+					multiple="true"
+				/>
+				<!-- [VDM\Joomla\Componentbuilder\Compiler\Creator\FieldString 289] Url Field. Type: Url. (joomla) -->
+				<field
+					type="url"
+					name="url"
+					label="MOD_SITEREDIRECT_URL_LABEL"
+					size="60"
+					maxlength="150"
+					description="MOD_SITEREDIRECT_URL_DESCRIPTION"
+					class="text_area"
+					required="true"
+					filter="url"
+					validated="url"
+					scheme="http,https"
+					message="MOD_SITEREDIRECT_URL_MESSAGE"
+					hint="MOD_SITEREDIRECT_URL_HINT"
+				/>
+			</form>
+		</field>
+	</fieldset>
+		<fieldset name="advanced">
+			<field
+				name="layout"
+				type="modulelayout"
+				label="JFIELD_ALT_LAYOUT_LABEL"
+				class="form-select"
+				validate="moduleLayout"
+			/>
+			<field
+				name="moduleclass_sfx"
+				type="textarea"
+				label="MOD_SITEREDIRECT_FIELD_MODULECLASS_SFX_LABEL"
+				rows="3"
+				validate="CssIdentifier"
+			/>
+			<field
+				name="owncache"
+				type="list"
+				label="MOD_SITEREDIRECT_FIELD_CACHING_LABEL"
+				default="1"
+				filter="integer"
+				validate="options"
+				>
+				<option value="1">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">MOD_SITEREDIRECT_FIELD_VALUE_NOCACHING</option>
+			</field>
+			<field
+				name="cache_time"
+				type="number"
+				label="MOD_SITEREDIRECT_FIELD_CACHE_TIME_LABEL"
+				default="900"
+				filter="integer"
+			/>
+		</fieldset>
+	</fields>
+	</config>
+</extension>
